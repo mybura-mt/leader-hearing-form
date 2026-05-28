@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事前ヒアリングシート｜リーダー講座・実践共有プロジェクト</title>
+  <script src="settings.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #1a3560;
+      --sec2: #e07b00;
+      --sec3: #1565c0;
+      --sec4: #b8860b;
+      --sec5: #2e7d32;
+      --sec6: #6a1b9a;
+      --sec7: #c62828;
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Meiryo', sans-serif;
+      background: linear-gradient(135deg, #f0f4ff 0%, #fafafa 100%);
+      min-height: 100vh;
+      color: #222;
+      line-height: 1.7;
+    }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      background: linear-gradient(135deg, #1a3560 0%, #2b5199 100%);
+      color: white;
+      padding: 40px 24px 32px;
+      text-align: center;
+    }
+    .site-header .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 20px;
+      padding: 4px 16px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .site-header h1 {
+      font-size: clamp(26px, 5vw, 42px);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+    .site-header p {
+      font-size: 15px;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* ===== MAIN LAYOUT ===== */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 16px 80px;
+    }
+
+    /* ===== SECTION CARD ===== */
+    .section-card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px;
+      color: white;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+    }
+    .section-header .num {
+      background: rgba(255,255,255,0.25);
+      border-radius: 50%;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .s1 .section-header { background: var(--primary); }
+    .s2 .section-header { background: var(--sec2); }
+    .s3 .section-header { background: var(--sec3); }
+    .s4 .section-header { background: var(--sec4); }
+    .s5 .section-header { background: var(--sec5); }
+    .s6 .section-header { background: var(--sec6); }
+    .s7 .section-header { background: var(--sec7); }
+
+    .section-body { padding: 24px; }
+
+    /* ===== GRID for 基本情報 ===== */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .col-span-2 { grid-column: span 2; }
+    .col-span-full { grid-column: 1 / -1; }
+
+    @media (max-width: 600px) {
+      .grid-3, .grid-2 { grid-template-columns: 1fr; }
+      .col-span-2, .col-span-full { grid-column: 1; }
+    }
+
+    /* ===== FORM ELEMENTS ===== */
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #444;
+      letter-spacing: 0.02em;
+    }
+    .field label .required {
+      color: #e53935;
+      margin-left: 4px;
+    }
+    .field input[type="text"],
+    .field input[type="email"],
+    .field textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: inherit;
+      color: #222;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #fafafa;
+      resize: vertical;
+    }
+    .field input:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(26,53,96,0.1);
+    }
+    .field textarea { min-height: 100px; }
+    .field textarea.tall { min-height: 130px; }
+
+    /* Question label */
+    .q-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+    }
+    .q-label .q-num {
+      background: var(--primary);
+      color: white;
+      border-radius: 4px;
+      padding: 1px 7px;
+      font-size: 12px;
+      flex-shrink: 0;
+      align-self: flex-start;
+      margin-top: 2px;
+    }
+    .s2 .q-label .q-num { background: var(--sec2); }
+    .s3 .q-label .q-num { background: var(--sec3); }
+    .s4 .q-label .q-num { background: var(--sec4); }
+    .s5 .q-label .q-num { background: var(--sec5); }
+    .s6 .q-label .q-num { background: var(--sec6); }
+    .s7 .q-label .q-num { background: var(--sec7); }
+
+    .q-hint {
+      font-size: 12px;
+      color: #888;
+      margin-top: -4px;
+      margin-bottom: 6px;
+    }
+
+    .question-block { margin-bottom: 24px; }
+    .question-block:last-child { margin-bottom: 0; }
+
+    /* 3つのサブ入力 */
+    .sub-inputs { display: flex; flex-direction: column; gap: 10px; }
+    .sub-input-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sub-input-row .sub-num {
+      font-weight: 800;
+      color: #666;
+      font-size: 15px;
+      flex-shrink: 0;
+      width: 22px;
+    }
+    .sub-input-row input { flex: 1; }
+
+    /* Divider */
+    .divider { border: none; border-top: 1px solid #f0f0f0; margin: 20px 0; }
+
+    /* ===== THEME EXAMPLES ===== */
+    .theme-examples {
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 28px;
+    }
+    .theme-examples h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #b8860b;
+      margin-bottom: 12px;
+    }
+    .theme-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .theme-tag {
+      background: white;
+      border: 1px solid #f0c040;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 13px;
+      color: #7a5800;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .theme-tag:hover {
+      background: #ffe082;
+    }
+
+    /* ===== SUBMIT AREA ===== */
+    .submit-area {
+      text-align: center;
+      padding: 12px 0;
+    }
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #1a3560, #2b5199);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 18px 60px;
+      font-size: 18px;
+      font-weight: 800;
+      font-family: inherit;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 6px 24px rgba(26,53,96,0.35);
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(26,53,96,0.4);
+    }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-icon { font-size: 22px; }
+
+    /* ===== SUCCESS / ERROR ===== */
+    .toast {
+      display: none;
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 28px;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    .toast.success {
+      background: #e8f5e9;
+      border: 2px solid #4caf50;
+      color: #1b5e20;
+    }
+    .toast.error {
+      background: #ffebee;
+      border: 2px solid #f44336;
+      color: #b71c1c;
+    }
+    .toast h3 { font-size: 18px; margin-bottom: 8px; }
+
+    /* Loading spinner */
+    .spinner {
+      display: none;
+      width: 20px; height: 20px;
+      border: 3px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      text-align: center;
+      padding: 24px;
+      color: #aaa;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="badge">リーダー講座・実践共有プロジェクト</div>
+  <h1>事前ヒアリングシート</h1>
+  <p>あなたの取り組みを他部門と共有し、学び合い、行動につなげていくための大切なシートです。<br>できる範囲でご記入をお願いいたします。</p>
+</header>
+
+<div class="container">
+
+  <!-- SUCCESS / ERROR TOAST -->
+  <div id="successToast" class="toast success">
+    <h3>✅ 送信が完了しました！</h3>
+    <p>ヒアリングシートを受け付けました。ご記入いただきありがとうございます。<br>確認後、担当者よりご連絡いたします。</p>
+  </div>
+  <div id="errorToast" class="toast error">
+    <h3>⚠️ 送信に失敗しました</h3>
+    <p id="errorMsg">しばらく時間をおいて再度お試しください。</p>
+  </div>
+
+  <form id="hearingForm" novalidate>
+
+    <!-- ======= 1. 基本情報 ======= -->
+    <div class="section-card s1">
+      <div class="section-header">
+        <div class="num">1</div>
+        基本情報
+      </div>
+      <div class="section-body">
+        <div class="grid-3" style="margin-bottom:16px;">
+          <div class="field">
+            <label>所属会社名 <span class="required">*</span></label>
+            <input type="text" name="company" required placeholder="例：株式会社○○">
+          </div>
+          <div class="field">
+            <label>部門名</label>
+            <input type="text" name="department" placeholder="例：営業部">
+          </div>
+          <div class="field">
+            <label>役職</label>
+            <input type="text" name="position" placeholder="例：マネージャー">
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label>お名前 <span class="required">*</span></label>
+            <input type="text" name="name" required placeholder="山田 太郎">
+          </div>
+          <div class="field">
+            <label>連絡先（メールアドレス） <span class="required">*</span></label>
+            <input type="email" name="email" required placeholder="example@company.com">
+          </div>
+          <div class="field col-span-2">
+            <label>講座のテーマ（仮でもOK）</label>
+            <input type="text" name="theme" placeholder="例：スタッフ定着率の改善、チームコミュニケーション強化 など">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- テーマ例 -->
+    <div class="theme-examples">
+      <h3>💡 テーマ例（参考）— クリックで入力欄に反映</h3>
+      <div class="theme-tags">
+        <span class="theme-tag" onclick="setTheme(this)">組織風土改革への取り組み</span>
+        <span class="theme-tag" onclick="setTheme(this)">スタッフ育成・定着の工夫</span>
+        <span class="theme-tag" onclick="setTheme(this)">業務改善・生産性向上</span>
+        <span class="theme-tag" onclick="setTheme(this)">採用・利用者さん創りへの工夫</span>
+        <span class="theme-tag" onclick="setTheme(this)">チームワーク・コミュニケーション強化</span>
+        <span class="theme-tag" onclick="setTheme(this)">売上・収益向上への取り組み</span>
+        <span class="theme-tag" onclick="setTheme(this)">サービス品質向上</span>
+        <span class="theme-tag" onclick="setTheme(this)">デジタル・IT活用の工夫</span>
+        <span class="theme-tag" onclick="setTheme(this)">新しいチャレンジ・挑戦事例</span>
+      </div>
+    </div>
+
+    <!-- ======= 2. テーマ・背景 ======= -->
+    <div class="section-card s2">
+      <div class="section-header">
+        <div class="num">2</div>
+        テーマ・背景
+      </div>
+      <div class="section-body">
+        <div class="question-block">
+          <div class="q-label">
+            <span class="q-num">Q1</span>
+            今回共有したいテーマは何ですか？
+          </div>
+          <p class="q-hint">例：業務効率化、顧客満足度、チームワーク　など</p>
+          <div class="field">
+            <textarea name="q1" class="tall" placeholder="テーマについて、できるだけ具体的にご記入ください。"></textarea>
+          </div>
+        </div>
+        <hr class="divider">
+        <div class="question-block">
+          <div class="q-label">
+            <span class="q-num">Q2</span>
+            なぜそのテーマに取り組んでいますか？
+          </div>
+          <p class="q-hint">背景・課題</p>
+          <div class="field">
+            <textarea name="q2" class="tall" placeholder="取り組むきっかけや、現状の課題についてお聞かせください。"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= 3. ゴール・目的 ======= -->
+    <div class="section-card s3">
+      <div class="section-header">
+        <div class="num">3</div>
+        ゴール・目的
+      </div>
+      <div class="section-body">
+        <div class="question-block">
+          <div class="q-label">
+            <span class="q-num">Q3</span>
+            この取り組みの目的は何ですか？
+          </div>
+          <div class="field">
+            <textarea name="q3" placeholder="目指す状態や達成したいことをご記入ください。"></textarea>
+          </div>
+        </div>
+        <hr class="divider">
+        <div class="question-block">
+          <div class="q-label">
+            <span class="q-num">Q4</span>
+            理想の状態はどのような状態ですか？
+          </div>
+          <p class="q-hint">「この状態になればOK」と言える状態を教えてください。</p>
+          <div class="field">
+            <textarea name="q4" class="tall" placeholder="具体的なゴールのイメージをご記入ください。"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= 4. 実際に行っていること ======= -->
+    <div class="section-card s4">
+      <div class="section-header">
+        <div class="num">4</div>
+        実際に行っていること
+      </div>
+      <div class="section-body">
+        <div class="question-block">
+          <div class="q-label">
+            <span class="q-num">Q5</span>
+            具体的に取り組んでいる内容を教えてください。（3つまで）
+          </div>
+          <div class="sub-inputs">
+            <div class="sub-input-row">
+              <span class="sub-num">①</span>
+              <div class="field" style="flex:1;">
+                <input type="text" name="q5_1" placeholder="取り組み①">
+              </div>
+            </div>
+            <div class="sub-input-row">
+              <span class="sub-num">②</span>
+              <div class="field" style="flex:1;">
+                <input type="text" name="q5_2" placeholder="取り組み②">
+              </div>
+            </div>
+            <div class="sub-input-row">
+              <span class="sub-num">③</span>
+              <div class="field" style="flex:1;">
+                <input type="text" name="q5_3" placeholder="取り組み③">
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="divider">
+        <div class="question-block">
+          <div class="q-label">
+            <span class="q-num">Q6</span>
+            工夫しているポイントはどこですか？
+          </div>
+          <p class="q-hint">例：役割分担、ムード、コミュニケーション、ツール活用 など</p>
+          <div class="field">
+            <textarea name="q6" placeholder="特に意識していること、こだわっているポイントをご記入ください。"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= 5. 成果・変化 ======= -->
+    <div class="section-card s5">
+      <div class="section-header">
+        <div class="num">5</div>
+        成果・変化
+      </div>
+      <div class="section-body">
+        <div class="question-block">
+          <div class="q-label">
+            <span class="q-num">Q7</span>
+            この取り組みによって、どんな成果が出ていますか？
+          </div>
+          <p class="q-hint">数字・言葉どちらでも構いません</p>
+          <div class="field">
+            <textarea name="q7" placeholder="例：離職率が○%下がった、スタッフの声が変わった、売上が増えた など"></textarea>
+          </div>
+        </div>
+        <hr class="divider">
+        <div class="question-block">
+          <div class="q-label">
+            <span class="q-num">Q8</span>
+            一番大きな変化・良かった変化は何ですか？
+          </div>
+          <div class="field">
+            <textarea name="q8" placeholder="特に印象的な変化や、ご自身が「これは良かった」と感じるエピソードをお聞かせください。"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= 6. 他部門への共有ポイント ======= -->
+    <div class="section-card s6">
+      <div class="section-header">
+        <div class="num">6</div>
+        他部門への共有ポイント
+      </div>
+      <div class="section-body">
+        <div class="question-block">
+          <div class="q-label">
+            <span class="q-num">Q9</span>
+            他部門にも活かせると考えるポイントはどこですか？
+          </div>
+          <div class="field">
+            <textarea name="q9" placeholder="この取り組みの中で、他の現場でも応用できそうな要素をご記入ください。"></textarea>
+          </div>
+        </div>
+        <hr class="divider">
+        <div class="question-block">
+          <div class="q-label">
+            <span class="q-num">Q10</span>
+            参加者に持ち帰ってほしいメッセージは何ですか？
+          </div>
+          <p class="q-hint">「明日から一つ行動するとしたら」</p>
+          <div class="field">
+            <textarea name="q10" class="tall" placeholder="参加者に一番伝えたいこと、持ち帰ってほしい学びをご記入ください。"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= 7. プレゼンテーションについて ======= -->
+    <div class="section-card s7">
+      <div class="section-header">
+        <div class="num">7</div>
+        プレゼンテーションについて
+      </div>
+      <div class="section-body">
+        <div class="question-block">
+          <div class="q-label">
+            <span class="q-num">Q11</span>
+            特に伝えたい内容・強調したいポイントは何ですか？
+          </div>
+          <div class="field">
+            <textarea name="q11" placeholder="プレゼンで一番力を入れたい部分をお聞かせください。"></textarea>
+          </div>
+        </div>
+        <hr class="divider">
+        <div class="question-block">
+          <div class="q-label">
+            <span class="q-num">Q12</span>
+            プレゼン資料で使用したいものはありますか？（任意）
+          </div>
+          <p class="q-hint">画像・写真・グラフ・事例 など</p>
+          <div class="field">
+            <textarea name="q12" placeholder="資料に盛り込みたい素材や表現方法についてご記入ください（任意）。"></textarea>
+          </div>
+        </div>
+        <hr class="divider">
+        <div class="question-block">
+          <div class="q-label">
+            <span class="q-num">Q13</span>
+            その他、補足や要望があればご自由にご記入ください。
+          </div>
+          <div class="field">
+            <textarea name="q13" class="tall" placeholder="何かご不明な点、ご要望などがございましたらご自由にご記入ください。"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= SUBMIT ======= -->
+    <div class="submit-area">
+      <p style="margin-bottom:20px;font-size:14px;color:#666;">
+        ご記入いただいた内容は、講座の構成や時間配分の参考にさせていただきます。
+      </p>
+      <button type="submit" class="btn-submit" id="submitBtn">
+        <span class="btn-icon">📨</span>
+        <span id="btnText">送信する</span>
+        <div class="spinner" id="spinner"></div>
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<footer class="site-footer">
+  &copy; リーダー講座・実践共有プロジェクト
+</footer>
+
+<script>
+  // テーマタグをクリックでテーマ欄に入力
+  function setTheme(el) {
+    document.querySelector('input[name="theme"]').value = el.textContent;
+  }
+
+  // フォーム送信処理
+  document.getElementById('hearingForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const btn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const spinner = document.getElementById('spinner');
+    const successToast = document.getElementById('successToast');
+    const errorToast = document.getElementById('errorToast');
+
+    // バリデーション
+    const required = form.querySelectorAll('[required]');
+    let valid = true;
+    required.forEach(el => {
+      el.style.borderColor = '';
+      if (!el.value.trim()) {
+        el.style.borderColor = '#f44336';
+        valid = false;
+      }
+    });
+    if (!valid) {
+      alert('必須項目（＊）をご入力ください。');
+      return;
+    }
+
+    // フォームデータ収集
+    const data = new FormData(form);
+    const json = {};
+    data.forEach((v, k) => { json[k] = v; });
+
+    // ローディング表示
+    btn.disabled = true;
+    btnText.textContent = '送信中...';
+    spinner.style.display = 'block';
+    successToast.style.display = 'none';
+    errorToast.style.display = 'none';
+
+    try {
+      // ================================================
+      // 📧 送信先設定 — Formspreeエンドポイント
+      // 変更方法: config.js の FORMSPREE_ENDPOINT を編集
+      // ================================================
+      const ENDPOINT = window.FORMSPREE_ENDPOINT || 'https://formspree.io/f/mqazbwgr';
+
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(json)
+      });
+
+      if (res.ok) {
+        successToast.style.display = 'block';
+        form.reset();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const err = await res.json();
+        throw new Error(err.error || '送信に失敗しました');
+      }
+    } catch (err) {
+      document.getElementById('errorMsg').textContent = err.message || 'ネットワークエラーが発生しました。';
+      errorToast.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btnText.textContent = '送信する';
+      spinner.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>
